@@ -25,9 +25,19 @@ def runtask(i):
     print("runing",i)
     time.sleep(0.05)
 
+# clock-based
 while True:
     x[0]+=1
+    start=time.monotonic()
     runtask(x[0])
-    time.sleep(1/freq)
+    end=time.monotonic()
+    duration=end-start
+    time.sleep(1/freq-duration)
+
+## naive sched:
+# while True:
+#     x[0]+=1
+#     runtask(x[0])
+#     time.sleep(1/freq)
 
 
