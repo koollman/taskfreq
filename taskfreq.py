@@ -3,6 +3,7 @@
 import time
 import signal
 import sys
+import random
 
 freq=10 #Hz
 total_runtime=5 #s
@@ -23,7 +24,9 @@ signal.alarm(total_runtime)
 
 def runtask(i):
     print("runing",i)
-    time.sleep(0.05)
+    # delay between 0 and twice the frequency expected
+    delay=random.randint(0,int(2*(1/freq)*1000))
+    time.sleep(delay/1000)
 
 # clock-based
 while True:
@@ -32,9 +35,11 @@ while True:
     runtask(x[0])
     end=time.monotonic()
     duration=end-start
-    time.sleep(1/freq-duration)
+    wait=1/freq-duration
+    if wait > 0 :
+        time.sleep(wait)
 
-## naive sched:
+# #naive sched:
 # while True:
 #     x[0]+=1
 #     runtask(x[0])
